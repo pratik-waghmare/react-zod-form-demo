@@ -1,15 +1,31 @@
 // components/SignupForm.tsx
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { userSchema, type UserFormData } from '../schemas/userSchema';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userSchema, type UserFormData } from "../schemas/userSchema";
 
 export function SignupForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(userSchema),
   });
 
-  const onSubmit = (data: UserFormData) => {
-    console.log("✅ Valid form data:", data);
+  const onSubmit = async (data: UserFormData) => {
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await response.json();
+
+      console.log("✅ Valid form data:", responseData);
+    } catch (error) {
+      console.error("/api/register: ", error);
+    }
   };
 
   return (
