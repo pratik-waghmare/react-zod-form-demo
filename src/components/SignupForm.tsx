@@ -49,6 +49,18 @@ export function SignupForm() {
       </div>
 
       <div>
+        <label>Password</label>
+        <input type="password" {...register("password")} />
+        {errors.password && <p>{errors.password.message}</p>}
+      </div>
+
+      <div>
+        <label>Confirm Password</label>
+        <input type="password" {...register("confirmPassword")} />
+        {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+      </div>
+
+      <div>
         <label>
           <input type="checkbox" {...register("newsletter")} />
           Subscribe to newsletter
